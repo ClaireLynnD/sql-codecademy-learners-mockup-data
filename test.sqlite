@@ -6,15 +6,21 @@ SELECT * FROM users;
 
 SELECT * FROM progress;
 
+-- count number of users with each email domain from users
+
 SELECT email_domain, COUNT(email_domain)
 FROM users
 GROUP BY email_domain
 ORDER BY COUNT(email_domain) DESC
 LIMIT 25;
 
+-- Count users from new york
+
 SELECT COUNT(*)
 FROM users
 WHERE city LIKE 'New York';
+
+-- Select count of users who do not have the mobile app
 
 SELECT COUNT (*)
 FROM users
@@ -22,6 +28,8 @@ WHERE mobile_app IS NOT NULL;
 
 
 -- Step 3
+
+-- Sort Sign Up Times by Hour
 
 SELECT strftime('%H', sign_up_at), 
   COUNT (*)
@@ -35,17 +43,23 @@ FROM users
 JOIN progress
   ON users.user_id = progress.user_id;
 
+-- Check Progress on Email Domains
+
 SELECT users.email_domain, progress.learn_cpp, progress.learn_sql, progress.learn_html, progress.learn_javascript, progress.learn_java
 FROM users
 JOIN progress
   ON users.user_id = progress.user_id
 GROUP BY users.email_domain
 
+-- Check Progress on Users from New York
+
 SELECT users.user_id, users.city, progress.learn_cpp, progress.learn_sql, progress.learn_html, progress.learn_javascript, progress.learn_java
 FROM users
 JOIN progress
   ON users.user_id = progress.user_id
 WHERE users.city = 'New York';
+
+-- Check Progress on Users from Chicago
 
 SELECT users.user_id, users.city, progress.learn_cpp, progress.learn_sql, progress.learn_html, progress.learn_javascript, progress.learn_java
 FROM users
